@@ -1,3 +1,8 @@
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
+
 from testapp import app
 import pyexcel as pe
 from nose.tools import eq_
@@ -71,8 +76,10 @@ class TestExcelResponse:
     def test_override_file_name(self):
         for file_type in FILE_TYPE_MIME_TABLE.keys():
             file_name = 'override_file_name'
+            url_encoded_file_name = quote(file_name)
             response = self.app.post('/file_name/%s/%s' % (file_type,
                                                            file_name))
             eq_(response.content_type, FILE_TYPE_MIME_TABLE[file_type])
             eq_(response.headers.get("Content-Disposition", None),
-                ("attachment; filename=%s.%s" % (file_name, file_type)))
+                ("attachment; filename=%s.%s;filename*=utf-8''%s.%s" % (url_encoded_file_name, file_type,
+                                                                        url_encoded_file_name, file_type)))
