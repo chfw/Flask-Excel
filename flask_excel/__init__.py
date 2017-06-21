@@ -8,6 +8,15 @@
     :copyright: (c) 2015 by Onni Software Ltd.
     :license: New BSD License
 """
+try:
+    # if in py2
+    from urllib import quote
+    _PY_VERSION = 2
+except ImportError:
+    # else (aka in py3)
+    from urllib.parse import quote
+    _PY_VERSION = 3
+
 from flask import Flask, Request, Response
 import pyexcel_webio as webio
 
@@ -38,8 +47,11 @@ def _make_response(content, content_type, status, file_name=None):
     """
     response = Response(content, content_type=content_type, status=status)
     if file_name:
+        if _PY_VERSION == 2 and isinstance(file_name, unicode):
+            file_name = file_name.encode('utf-8')
+        url_encoded_file_name = quote(file_name)
         response.headers["Content-Disposition"] = (
-            "attachment; filename=%s" % (file_name))
+            "attachment; filename=%s;filename*=utf-8''%s" % (url_encoded_file_name, url_encoded_file_name))
     return response
 
 
