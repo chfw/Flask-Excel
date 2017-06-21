@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 tiny_example.py
 :copyright: (c) 2015 by C. W.
@@ -32,6 +33,18 @@ def download_file():
 def export_records():
     return excel.make_response_from_array([[1, 2], [3, 4]], "csv",
                                           file_name="export_data")
+
+
+@app.route("/download_unicode_file_name_utf8", methods=['GET'])
+def download_unicode_file_name_utf8():
+    return excel.make_response_from_array([[1, 2], [3, 4]], "csv",
+                                          file_name="中文文件名")
+
+
+@app.route("/download_unicode_file_name_unicode", methods=['GET'])
+def download_unicode_file_name_unicode():
+    return excel.make_response_from_array([[1, 2], [3, 4]], "csv",
+                                          file_name=u"中文文件名")
 
 
 # insert database related code here
