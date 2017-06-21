@@ -81,5 +81,6 @@ class TestExcelResponse:
                                                            file_name))
             eq_(response.content_type, FILE_TYPE_MIME_TABLE[file_type])
             eq_(response.headers.get("Content-Disposition", None),
-                ("attachment; filename=%s.%s;filename*=utf-8''%s.%s" % (url_encoded_file_name, file_type,
-                                                                        url_encoded_file_name, file_type)))
+                ("attachment; filename=%s.%s;filename*=utf-8''%s.%s"
+                 % (url_encoded_file_name, file_type,
+                    url_encoded_file_name, file_type)))

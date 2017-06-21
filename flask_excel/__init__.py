@@ -51,7 +51,9 @@ def _make_response(content, content_type, status, file_name=None):
             file_name = file_name.encode('utf-8')
         url_encoded_file_name = quote(file_name)
         response.headers["Content-Disposition"] = (
-            "attachment; filename=%s;filename*=utf-8''%s" % (url_encoded_file_name, url_encoded_file_name))
+            "attachment; filename=%s;filename*=utf-8''%s"
+            % (url_encoded_file_name, url_encoded_file_name)
+        )
     return response
 
 
