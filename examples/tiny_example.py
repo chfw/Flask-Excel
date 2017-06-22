@@ -35,14 +35,8 @@ def export_records():
                                           file_name="export_data")
 
 
-@app.route("/download_unicode_file_name_utf8", methods=['GET'])
-def download_unicode_file_name_utf8():
-    return excel.make_response_from_array([[1, 2], [3, 4]], "csv",
-                                          file_name="中文文件名")
-
-
-@app.route("/download_unicode_file_name_unicode", methods=['GET'])
-def download_unicode_file_name_unicode():
+@app.route("/download_file_named_in_unicode", methods=['GET'])
+def download_file_named_in_unicode():
     return excel.make_response_from_array([[1, 2], [3, 4]], "csv",
                                           file_name=u"中文文件名")
 
